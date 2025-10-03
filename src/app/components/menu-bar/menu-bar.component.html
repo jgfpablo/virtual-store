@@ -1,17 +1,85 @@
-<div class="flex">
-  <div class="w-3xl"><span>logo</span></div>
+<nav>
+  <div class="md:flex hidden">
+    <div class="flex-1"></div>
 
-  <div class="w-full">
-    <ul class="flex">
-      <li class="px-1"><a routerLink="/">Inicio</a></li>
-      <li class="px-1"><a routerLink="/imanes">Imanes</a></li>
-      <li class="px-1"><a routerLink="/llaveros">Llaveros</a></li>
-      <li class="px-1"><a routerLink="/portaLlaves">Porta Llaves</a></li>
-      <li class="px-1"><a routerLink="/toppers">Adornos para Tortas</a></li>
-      <li class="px-1">
-        <a routerLink="/toppersCupcakes">Adornos para Cupcakes</a>
-      </li>
-      <li class="px-1"><a routerLink="/navidad">Navidad</a></li>
-    </ul>
+    <div class="flex flex-row items-center justify-between">
+      <div class="flex justify-center items-center">
+        <span>STORE</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <ul class="hidden md:flex space-x-4">
+          <li class="px-1"><a [routerLink]="['/']">Inicio</a></li>
+          <li class="px-1">
+            <a [routerLink]="['products/', 'imanes']">Imanes</a>
+          </li>
+          <li class="px-1">
+            <a [routerLink]="['products/', 'llaveros']">Llaveros</a>
+          </li>
+          <li class="px-1">
+            <a [routerLink]="['products/', 'portaLlaves']">Porta Llaves</a>
+          </li>
+          <li class="px-1">
+            <a [routerLink]="['products/', 'toppers']">Adornos para Tortas</a>
+          </li>
+          <li class="px-1">
+            <a [routerLink]="['products/', 'toppersCupcakes']"
+              >Adornos para Cupcakes</a
+            >
+          </li>
+          <li class="px-1">
+            <a [routerLink]="['products/', 'navidad']">Navidad</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex justify-center items-center w-32">
+        <span>STORE</span>
+      </div>
+    </div>
+
+    <div class="flex-1"></div>
   </div>
-</div>
+
+  <!-- MOBILE MENU  -->
+
+  <!-- OVERLAY -->
+  <div
+    id="overlay"
+    class="fixed inset-0 bg-gray-200 bg-opacity-80 z-40 hidden md:hidden"
+  ></div>
+  <!-- OVERLAY END -->
+
+  <button id="menu-btn" class="p-3 z-60 fixed md:hidden">
+    <svg
+      class="w-6 h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"
+      ></path>
+    </svg>
+  </button>
+
+  <div
+    id="menu"
+    class="md:hidden z-50 hs-overlay duration-300 ease-in border-gray-200 -translate-x-full fixed top-0 left-0 h-full w-64 bg-white shadow-lg"
+  >
+    <div class="relative flex flex-col h-full">
+      <div class="pl-4 flex justify-between items-center">
+        <span class="font-semibold text-xl ml-8 pt-2 text-black">logo</span>
+      </div>
+
+      <ul class="space-y-1 p-4">
+        <li class="py-2">Dashboard</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- END MOBILE MENU -->
+</nav>
