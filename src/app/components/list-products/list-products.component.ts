@@ -19,7 +19,9 @@ export class ListProductsComponent {
       console.log('entre a categorias');
       this.service
         .getByCategory(this.category)
-        .subscribe((data) => (this.products = data));
+        .subscribe(
+          (data) => (this.products = Array.isArray(data) ? data : [data])
+        );
     } else {
       console.log('entre a all products');
       this.service.getAll().subscribe((data) => (this.products = data));
