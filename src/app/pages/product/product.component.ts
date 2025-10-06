@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ProductsService } from '../../services/products.service';
+import { Product } from '../../interface/products';
 @Component({
   selector: 'app-product',
   standalone: false,
@@ -7,12 +9,19 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './product.component.css',
 })
 export class ProductComponent {
-  constructor(private route: ActivatedRoute) {}
-  product!: string;
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductsService
+  ) {}
+  product!: Product;
+  id!: string;
+  imgActive = 0;
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.product = params.get('product') || '';
-      console.log(this.product);
+      this.id = params.get('product') || '';
+      this.productService.getById(this.id).subscribe((product) => {
+        this.product = product;
+      });
     });
   }
 }

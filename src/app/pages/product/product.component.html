@@ -5,65 +5,30 @@
     <div class="flex flex-col flex-4">
       <img
         class="w-full rounded-4xl p-4"
-        src="img/10.jpg"
+        src="{{ product.images[imgActive] }}"
         alt="product image"
       />
       <div class="flex justify-center items-center flex-wrap">
+        @for (item of product.images; track $index) {
         <img
           class="w-24 h-24 p-2 rounded-4xl"
-          src="img/10.jpg"
+          src="{{ item }}"
           alt="product image"
+          (click)="imgActive = $index"
         />
-        <img
-          class="w-24 h-24 p-2 rounded-4xl"
-          src="img/10.jpg"
-          alt="product image"
-        />
-        <img
-          class="w-24 h-24 p-2 rounded-4xl"
-          src="img/10.jpg"
-          alt="product image"
-        />
-        <img
-          class="w-24 h-24 p-2 rounded-4xl"
-          src="img/10.jpg"
-          alt="product image"
-        />
-        <img
-          class="w-24 h-24 p-2 rounded-4xl"
-          src="img/10.jpg"
-          alt="product image"
-        />
-        <img
-          class="w-24 h-24 p-2 rounded-4xl"
-          src="img/10.jpg"
-          alt="product image"
-        />
-        <img
-          class="w-24 h-24 p-2 rounded-4xl"
-          src="img/10.jpg"
-          alt="product image"
-        />
-        <img
-          class="w-24 h-24 p-2 rounded-4xl"
-          src="img/10.jpg"
-          alt="product image"
-        />
+        }
       </div>
     </div>
 
     <div class="flex-6 justify-center items-center">
-      <h1 class="text-4xl p-4 font-bold">Mariposa Decorativa</h1>
-      <h3 class="text-4xl text-gray-400 pt-2">$ 400.00</h3>
+      <h1 class="text-4xl p-4 font-bold">{{ product.nombre }}</h1>
+      <h3 class="text-4xl text-gray-400 pt-2">$ {{ product.precio }}</h3>
 
       <h3 class="pt-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem natus
-        nesciunt aut dolorum incidunt earum explicabo veniam doloribus
-        dignissimos! Vel eos cupiditate quas asperiores magni, iure porro
-        laudantium fugit est!
+        {{ product.descripcion }}
       </h3>
 
-      <div class="pt-4">rojo blanco negro amarillo</div>
+      <div class="pt-4">{{ product.colores }}</div>
 
       <button class="border-2 border-black mt-4 bg-green-400 w-64">
         WHARAP
@@ -80,60 +45,26 @@
   <div class="flex flex-col">
     <img class="w-full rounded-4xl p-4" src="img/10.jpg" alt="product image" />
     <div class="flex justify-center items-center flex-wrap">
+      @for (item of product.images; track $index) {
       <img
         class="w-24 h-24 p-2 rounded-4xl"
-        src="img/10.jpg"
+        src="{{ item }}"
         alt="product image"
       />
-      <img
-        class="w-24 h-24 p-2 rounded-4xl"
-        src="img/10.jpg"
-        alt="product image"
-      />
-      <img
-        class="w-24 h-24 p-2 rounded-4xl"
-        src="img/10.jpg"
-        alt="product image"
-      />
-      <img
-        class="w-24 h-24 p-2 rounded-4xl"
-        src="img/10.jpg"
-        alt="product image"
-      />
-      <img
-        class="w-24 h-24 p-2 rounded-4xl"
-        src="img/10.jpg"
-        alt="product image"
-      />
-      <img
-        class="w-24 h-24 p-2 rounded-4xl"
-        src="img/10.jpg"
-        alt="product image"
-      />
-      <img
-        class="w-24 h-24 p-2 rounded-4xl"
-        src="img/10.jpg"
-        alt="product image"
-      />
-      <img
-        class="w-24 h-24 p-2 rounded-4xl"
-        src="img/10.jpg"
-        alt="product image"
-      />
+      }
     </div>
 
     <div class="justify-center items-center">
-      <h1 class="text-4xl p-4 font-bold text-center">Mariposa Decorativa</h1>
-      <h3 class="text-4xl text-gray-400 pt-2 text-center">$ 400.00</h3>
-
-      <h3 class="pt-4 text-center">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem natus
-        nesciunt aut dolorum incidunt earum explicabo veniam doloribus
-        dignissimos! Vel eos cupiditate quas asperiores magni, iure porro
-        laudantium fugit est!
+      <h1 class="text-4xl p-4 font-bold text-center">{{ product.nombre }}</h1>
+      <h3 class="text-4xl text-gray-400 pt-2 text-center">
+        $ {{ product.precio }}
       </h3>
 
-      <div class="pt-4 text-center">rojo blanco negro amarillo</div>
+      <h3 class="pt-4 text-center">
+        {{ product.descripcion }}
+      </h3>
+
+      <div class="pt-4 text-center">{{ product.colores }}</div>
 
       <div class="flex justify-center items-center">
         <button class="border-2 border-black mt-4 bg-green-400 w-64">

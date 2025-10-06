@@ -7,6 +7,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { ListProductsComponent } from './list-products/list-products.component';
 
 import { CardProductComponent } from './card-product/card-product.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -14,8 +15,14 @@ import { CardProductComponent } from './card-product/card-product.component';
     LoginComponent,
     ListProductsComponent,
     CardProductComponent,
+    SpinnerComponent,
   ],
   imports: [CommonModule, AppRoutingModule],
-  exports: [MenuBarComponent, LoginComponent, ListProductsComponent],
+  exports: [
+    MenuBarComponent,
+    LoginComponent,
+    ListProductsComponent,
+    SpinnerComponent,
+  ],
 })
 export class ComponentsModule {}

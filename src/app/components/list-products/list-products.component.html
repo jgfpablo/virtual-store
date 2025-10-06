@@ -1,11 +1,14 @@
 <div class="flex">
   <div class="flex-1"></div>
   <div
-    class="flex-6 flex flex-col md:flex-row justify-center items-center mt-4"
+    class="flex-8 flex flex-col md:flex-row md:flex-wrap mt-4 md:justify-center"
   >
     @for (product of products; track $index) {
-    <app-card-product [product]="product"></app-card-product>
+    <app-card-product class="m-4" [product]="product"></app-card-product>
     }
   </div>
+
   <div class="flex-1"></div>
 </div>
+
+<app-spinner *ngIf="loading"></app-spinner>
