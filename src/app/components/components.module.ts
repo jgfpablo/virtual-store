@@ -8,6 +8,8 @@ import { ListProductsComponent } from './list-products/list-products.component';
 
 import { CardProductComponent } from './card-product/card-product.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     CardProductComponent,
     SpinnerComponent,
   ],
-  imports: [CommonModule, AppRoutingModule],
+  imports: [CommonModule, AppRoutingModule, RouterModule, FormsModule],
   exports: [
     MenuBarComponent,
     LoginComponent,

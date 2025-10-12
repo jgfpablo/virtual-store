@@ -33,7 +33,13 @@
       </div>
 
       <div class="flex justify-center items-center w-32">
-        <input placeholder="buscar..." type="text" /> <button>Buscar</button>
+        <input
+          placeholder="buscar..."
+          (keyup.enter)="buscar()"
+          [(ngModel)]="buscarInput"
+          type="text"
+        />
+        <button (click)="buscar()">Buscar</button>
       </div>
     </div>
 
