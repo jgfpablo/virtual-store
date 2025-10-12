@@ -31,4 +31,12 @@ export class ProductsService {
   getById(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
+
+  getBySearch(search: string, page: number = 1, limit: number = 6) {
+    return this.http.get<{
+      products: Product[];
+      total: number;
+      totalPages: number;
+    }>(`${this.apiUrl}search?q=${search}&page=${page}&limit=${limit}`);
+  }
 }

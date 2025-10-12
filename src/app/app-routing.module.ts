@@ -7,6 +7,8 @@ const routes: Routes = [
   { path: '', component: AllProductsComponent, pathMatch: 'full' },
   { path: 'products/:category', component: AllProductsComponent },
   { path: 'product/:product', component: ProductComponent },
+
+  { path: 'product', component: AllProductsComponent },
   // { path: 'products/:imanes', component: AllProductsComponent },
   // { path: 'products/:llaveros', component: AllProductsComponent },
   // { path: 'products/:portaLlaves', component: AllProductsComponent },

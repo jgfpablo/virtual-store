@@ -30,6 +30,8 @@ export class MenuBarComponent {
   buscar() {
     const term = this.buscarInput.trim();
     if (!term) return;
-    this.router.navigate(['/productos'], { queryParams: { search: term } });
+
+    // Redirige a /product con queryParams
+    this.router.navigate(['/product'], { queryParams: { search: term } });
   }
 }

@@ -1,6 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
 import { Product } from '../../interface/products';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-list-products',
@@ -18,10 +19,26 @@ export class ListProductsComponent {
 
   loading = true;
 
-  constructor(private service: ProductsService) {}
+  constructor(
+    private service: ProductsService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.loadProducts();
+    this.route.queryParams.subscribe((params) => {
+      const search = params['search']; // leer ?search=...
+      if (search) {
+        // Si hay búsqueda, llamás al servicio de búsqueda
+        this.service.getBySearch(search).subscribe((res: any) => {
+          this.products = res.products;
+          this.totalPages = res.totalPages;
+          this.loading = false;
+        });
+      } else {
+        // Si no hay búsqueda, cargás normalmente
+        this.loadProducts();
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -29,36 +46,6 @@ export class ListProductsComponent {
       this.page = 1;
       this.loadProducts();
     }
-
-    // if (changes['category']) {
-    //   this.loading = true;
-    //   this.products = [];
-    //   if (this.category) {
-    //     console.log('entre a categorias');
-    //     this.service.getByCategory(this.category, 1, 6).subscribe({
-    //       next: (res: any) => {
-    //         this.products = res.products || [];
-    //         this.loading = false;
-    //       },
-    //       error: (err) => {
-    //         console.error(err);
-    //         this.loading = false;
-    //       },
-    //     });
-    //   } else {
-    //     console.log('entre a all products');
-    //     this.service.getAll().subscribe({
-    //       next: (res: any) => {
-    //         this.products = res.products || [];
-    //         this.loading = false;
-    //       },
-    //       error: (err) => {
-    //         console.error(err);
-    //         this.loading = false;
-    //       },
-    //     });
-    //   }
-    // }
   }
 
   loadProducts() {
