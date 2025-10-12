@@ -13,11 +13,12 @@ export class ListProductsComponent {
   @Input() category!: string;
   products: Product[] = [];
 
-  page: number = 1;
-  totalPages: number = 1;
-  visiblePages: number = 5; // cantidad de páginas a mostrar en el carrusel
-
+  page = 1;
+  totalPages = 1;
+  visiblePages = 5;
   loading = true;
+
+  searchTerm: string | null = null;
 
   constructor(
     private service: ProductsService,
@@ -26,23 +27,29 @@ export class ListProductsComponent {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      const search = params['search']; // leer ?search=...
-      if (search) {
-        // Si hay búsqueda, llamás al servicio de búsqueda
-        this.service.getBySearch(search).subscribe((res: any) => {
-          this.products = res.products;
-          this.totalPages = res.totalPages;
-          this.loading = false;
-        });
+      this.searchTerm = params['search'] || null;
+      this.page = 1;
+
+      if (!this.searchTerm) {
+        this.loadProducts(); // solo carga todos si NO hay búsqueda
       } else {
-        // Si no hay búsqueda, cargás normalmente
-        this.loadProducts();
+        this.service.getBySearch(this.searchTerm, this.page, 6).subscribe({
+          next: (res: any) => {
+            this.products = res.products;
+            this.totalPages = res.totalPages;
+            this.loading = false;
+          },
+          error: (err) => {
+            console.error(err);
+            this.loading = false;
+          },
+        });
       }
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['category']) {
+    if (changes['category'] && !this.searchTerm) {
       this.page = 1;
       this.loadProducts();
     }
@@ -52,7 +59,23 @@ export class ListProductsComponent {
     this.loading = true;
     this.products = [];
 
-    console.log(this.page);
+    // Si hay búsqueda activa
+    if (this.searchTerm) {
+      this.service.getBySearch(this.searchTerm, this.page, 6).subscribe({
+        next: (res: any) => {
+          this.products = res.products;
+          this.totalPages = res.totalPages;
+          this.loading = false;
+        },
+        error: (err: any) => {
+          console.error(err);
+          this.loading = false;
+        },
+      });
+      return;
+    }
+
+    // Si hay categoría seleccionada
     if (this.category) {
       this.service.getByCategory(this.category, this.page, 6).subscribe({
         next: (res: any) => {
@@ -65,19 +88,21 @@ export class ListProductsComponent {
           this.loading = false;
         },
       });
-    } else {
-      this.service.getAll(this.page, 6).subscribe({
-        next: (res: any) => {
-          this.products = res.products;
-          this.totalPages = res.totalPages;
-          this.loading = false;
-        },
-        error: (err: any) => {
-          console.error(err);
-          this.loading = false;
-        },
-      });
+      return;
     }
+
+    // Si no hay búsqueda ni categoría
+    this.service.getAll(this.page, 6).subscribe({
+      next: (res: any) => {
+        this.products = res.products;
+        this.totalPages = res.totalPages;
+        this.loading = false;
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.loading = false;
+      },
+    });
   }
 
   goToPage(page: number) {
@@ -106,13 +131,9 @@ export class ListProductsComponent {
     const half = Math.floor(this.visiblePages / 2);
     let start = Math.max(this.page - half, 1);
     let end = Math.min(start + this.visiblePages - 1, this.totalPages);
-
-    // ajustar start si estamos al final
     start = Math.max(end - this.visiblePages + 1, 1);
 
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
+    for (let i = start; i <= end; i++) pages.push(i);
 
     return pages;
   }

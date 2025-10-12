@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ProductsService {
   private apiUrl =
-    'https://virtual-store-api-production.up.railway.app/api/products/'; // tu endpoint
+    'https://virtual-store-api-production.up.railway.app/api/products'; // tu endpoint
 
   constructor(private http: HttpClient) {}
 
@@ -17,7 +17,7 @@ export class ProductsService {
       products: Product[];
       total: number;
       totalPages: number;
-    }>(`${this.apiUrl}?page=${page}&limit=${limit}`);
+    }>(`${this.apiUrl}/?page=${page}&limit=${limit}`);
   }
 
   getByCategory(category: string, page: number = 1, limit: number = 6) {
@@ -25,7 +25,7 @@ export class ProductsService {
       products: Product[];
       total: number;
       totalPages: number;
-    }>(`${this.apiUrl}categoria/${category}?page=${page}&limit=${limit}`);
+    }>(`${this.apiUrl}/categoria/${category}?page=${page}&limit=${limit}`);
   }
 
   getById(id: string): Observable<Product> {
@@ -37,6 +37,6 @@ export class ProductsService {
       products: Product[];
       total: number;
       totalPages: number;
-    }>(`${this.apiUrl}search?q=${search}&page=${page}&limit=${limit}`);
+    }>(`${this.apiUrl}/search?q=${search}&page=${page}&limit=${limit}`);
   }
 }
