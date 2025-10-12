@@ -1,14 +1,41 @@
-<div class="flex">
-  <div class="flex-1"></div>
-  <div
-    class="flex-8 flex flex-col md:flex-row md:flex-wrap mt-4 md:justify-center"
-  >
-    @for (product of products; track $index) {
-    <app-card-product class="m-4" [product]="product"></app-card-product>
-    }
-  </div>
-
-  <div class="flex-1"></div>
+<div class="flex flex-wrap justify-center">
+  <app-card-product
+    *ngFor="let product of products"
+    [product]="product"
+    class="m-4"
+  ></app-card-product>
 </div>
 
 <app-spinner *ngIf="loading"></app-spinner>
+
+<!-- Paginación -->
+<div class="flex justify-center items-center mt-6 space-x-2">
+  <!-- Flecha atrás -->
+  <button
+    (click)="prevPage()"
+    [disabled]="page === 1"
+    class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+  >
+    &laquo;
+  </button>
+
+  <!-- Números de página -->
+  <button
+    *ngFor="let p of getPages()"
+    (click)="goToPage(p)"
+    [class.bg-blue-500]="p === page"
+    [class.text-white]="p === page"
+    class="px-3 py-1 rounded hover:bg-blue-400"
+  >
+    {{ p }}
+  </button>
+
+  <!-- Flecha adelante -->
+  <button
+    (click)="nextPage()"
+    [disabled]="page === totalPages"
+    class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+  >
+    &raquo;
+  </button>
+</div>
