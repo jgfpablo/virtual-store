@@ -1,15 +1,19 @@
-<div class="flex flex-wrap justify-center">
-  <app-card-product
-    *ngFor="let product of products"
-    [product]="product"
-    class="m-4"
-  ></app-card-product>
+<div class="flex justify-center mt-4">
+  <div class="flex-2"></div>
+  <div class="flex flex-wrap justify-center flex-6">
+    <app-card-product
+      *ngFor="let product of products"
+      [product]="product"
+      class="m-4"
+    ></app-card-product>
+  </div>
+  <div class="flex-2"></div>
 </div>
 
 <app-spinner *ngIf="loading"></app-spinner>
 
 <!-- Paginación -->
-<div class="flex justify-center items-center mt-6 space-x-2">
+<div class="flex justify-center items-center mt-6 mb-8 space-x-2">
   <!-- Flecha atrás -->
   <button
     (click)="prevPage()"

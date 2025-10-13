@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { CategoriesService } from '../../services/categories.service';
+import { Categoria } from '../../interface/categoria';
+
 @Component({
   selector: 'app-menu-bar',
   standalone: false,
@@ -8,7 +11,11 @@ import { Router } from '@angular/router';
   styleUrl: './menu-bar.component.css',
 })
 export class MenuBarComponent {
-  constructor(private router: Router) {}
+  categories: Categoria[] = [];
+  constructor(
+    private router: Router,
+    private serviceCategory: CategoriesService
+  ) {}
   buscarInput: string = '';
   ngAfterViewInit() {
     const btn = document.getElementById('menu-btn');
@@ -24,6 +31,24 @@ export class MenuBarComponent {
     overlay?.addEventListener('click', () => {
       menu?.classList.add('-translate-x-full');
       overlay?.classList.add('hidden');
+    });
+  }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    // this.serviceCategory.getCategories().subscribe((res) => {
+    // this.categories = res;
+    // console.log(res.nombre);
+    // });
+
+    this.serviceCategory.getCategories().subscribe({
+      next: (res: any) => {
+        // 👇 asegúrate de acceder al array correcto
+        this.categories = res.categorias || [];
+        console.log(this.categories);
+      },
+      error: (err) => console.error('Error al obtener categorías:', err),
     });
   }
 

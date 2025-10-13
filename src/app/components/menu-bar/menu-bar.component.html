@@ -1,37 +1,22 @@
 <nav>
   <div class="md:flex hidden">
-    <div class="flex-1"></div>
+    <div class="flex-2"></div>
 
-    <div class="flex flex-row items-center justify-between">
+    <div class="flex flex-row items-center justify-between flex-10">
       <div class="flex justify-center items-center">
         <span>STORE</span>
       </div>
       <div class="flex justify-between items-center">
         <ul class="hidden md:flex space-x-4">
           <li class="px-1"><a [routerLink]="['/']">Inicio</a></li>
+          @for (item of categories; track $index) {
           <li class="px-1">
-            <a [routerLink]="['products/', 'Imanes']">Imanes</a>
+            <a [routerLink]="['products/', item.nombre]">{{ item.nombre }}</a>
           </li>
-          <li class="px-1">
-            <a [routerLink]="['products/', 'Llaveros']">Llaveros</a>
-          </li>
-          <li class="px-1">
-            <a [routerLink]="['products/', 'PortaLlaves']">Porta Llaves</a>
-          </li>
-          <li class="px-1">
-            <a [routerLink]="['products/', 'Toppers']">Adornos para Tortas</a>
-          </li>
-          <li class="px-1">
-            <a [routerLink]="['products/', 'ToppersCupcakes']"
-              >Adornos para Cupcakes</a
-            >
-          </li>
-          <li class="px-1">
-            <a [routerLink]="['products/', 'Navidad']">Navidad</a>
-          </li>
+          }
         </ul>
       </div>
-      <div class="flex justify-center items-center space-x-2">
+      <div class="flex justify-center items-center space-x-2 mr-8">
         <input
           type="text"
           placeholder="Buscar"
@@ -46,8 +31,6 @@
           Buscar
         </button>
       </div>
-
-      <div class="flex-1"></div>
     </div>
 
     <!-- MOBILE MENU  -->
@@ -87,6 +70,11 @@
 
         <ul class="space-y-1 p-4">
           <li class="py-2">Dashboard</li>
+          <!-- @for (item of categories; track $index) {
+          <li class="py-2">
+            <a [routerLink]="['products/', item.nombre]">{{ item.nombre }}</a>
+          </li>
+          } -->
         </ul>
       </div>
     </div>
