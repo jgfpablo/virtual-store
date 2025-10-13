@@ -35,13 +35,6 @@ export class MenuBarComponent {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // this.serviceCategory.getCategories().subscribe((res) => {
-    // this.categories = res;
-    // console.log(res.nombre);
-    // });
-
     this.serviceCategory.getCategories().subscribe({
       next: (res: any) => {
         // 👇 asegúrate de acceder al array correcto
@@ -58,5 +51,12 @@ export class MenuBarComponent {
 
     // Redirige a /product con queryParams
     this.router.navigate(['/product'], { queryParams: { search: term } });
+  }
+
+  closeMenu() {
+    const menu = document.getElementById('menu');
+    const overlay = document.getElementById('overlay');
+    menu?.classList.add('-translate-x-full');
+    overlay?.classList.add('hidden');
   }
 }
