@@ -17,6 +17,10 @@ export class MenuBarComponent {
     private serviceCategory: CategoriesService
   ) {}
   buscarInput: string = '';
+
+  mostrarModal = false;
+  mostrarLupa = false;
+
   ngAfterViewInit() {
     const btn = document.getElementById('menu-btn');
     const menu = document.getElementById('menu');
@@ -26,11 +30,13 @@ export class MenuBarComponent {
       // menu?.classList.toggle('hidden'); // alterna visibilidad
       menu?.classList.toggle('-translate-x-full');
       overlay?.classList.toggle('hidden');
+      this.mostrarLupa = !this.mostrarLupa;
     });
 
     overlay?.addEventListener('click', () => {
       menu?.classList.add('-translate-x-full');
       overlay?.classList.add('hidden');
+      this.mostrarLupa = !this.mostrarLupa;
     });
   }
 
@@ -58,5 +64,6 @@ export class MenuBarComponent {
     const overlay = document.getElementById('overlay');
     menu?.classList.add('-translate-x-full');
     overlay?.classList.add('hidden');
+    this.mostrarLupa = !this.mostrarLupa;
   }
 }

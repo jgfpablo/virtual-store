@@ -18,7 +18,7 @@
   <button
     (click)="prevPage()"
     [disabled]="page === 1"
-    class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+    class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-yellow-600 cursor-pointer"
   >
     &laquo;
   </button>
@@ -27,9 +27,9 @@
   <button
     *ngFor="let p of getPages()"
     (click)="goToPage(p)"
-    [class.bg-blue-500]="p === page"
+    [class.bg-yellow-500]="p === page"
     [class.text-white]="p === page"
-    class="px-3 py-1 rounded hover:bg-blue-400"
+    class="px-3 py-1 rounded hover:bg-yellow-600 cursor-pointer"
   >
     {{ p }}
   </button>
@@ -38,7 +38,7 @@
   <button
     (click)="nextPage()"
     [disabled]="page === totalPages"
-    class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+    class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-yellow-600 cursor-pointer"
   >
     &raquo;
   </button>

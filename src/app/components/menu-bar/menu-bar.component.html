@@ -1,5 +1,5 @@
 <nav
-  class="md:bg-white md:shadow-md flex px-6 py-4 justify-between items-center"
+  class="md:bg-white md:shadow-md flex px-6 md:py-4 py-2 justify-between items-center"
 >
   <!-- Desktop Menu -->
   <div class="hidden md:flex w-full justify-between items-center">
@@ -48,7 +48,7 @@
       <button
         type="button"
         (click)="buscar()"
-        class="bg-yellow-500 text-white px-4 py-1 rounded-md hover:bg-yellow-600 transition"
+        class="bg-yellow-500 text-white px-4 py-1 rounded-md hover:bg-yellow-600 transition cursor-pointer"
       >
         Buscar
       </button>
@@ -75,6 +75,75 @@
         />
       </svg>
     </button>
+
+    <!--  BUSCADOR MOBILE -->
+    <!-- Botón de búsqueda -->
+    <!-- 🔍 Lupa fija arriba a la derecha -->
+    <!-- 🔍 Lupa fija arriba a la derecha -->
+    @if(mostrarLupa == false){
+    <div class="fixed top-4 right-4 z-50 md:hidden">
+      <button
+        type="button"
+        (click)="mostrarModal = true"
+        class="bg-yellow-500 text-white p-2 rounded-full hover:bg-yellow-600 transition"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- 🧊 Overlay transparente + modal -->
+    <div
+      *ngIf="mostrarModal"
+      class="fixed inset-0 z-40 flex items-center justify-center backdrop-blur-md bg-white/10"
+      (click)="mostrarModal = false"
+    >
+      <!-- Evita que el clic dentro del modal lo cierre -->
+      <div
+        class="bg-white rounded-lg shadow-xl p-6 w-80 relative m-4"
+        (click)="$event.stopPropagation()"
+      >
+        <!-- ❌ Botón cerrar -->
+        <button
+          (click)="mostrarModal = false"
+          class="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-xl font-bold"
+        >
+          ✕
+        </button>
+
+        <!-- 🔍 Campo de búsqueda -->
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">
+          ¿Qué estás buscando?
+        </h2>
+        <input
+          type="text"
+          [(ngModel)]="buscarInput"
+          placeholder="Escribí tu búsqueda..."
+          class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+        />
+        <button
+          (click)="buscar(); mostrarModal = false"
+          class="mt-4 w-full bg-yellow-500 text-white py-2 rounded-md hover:bg-yellow-600 transition"
+        >
+          Buscar
+        </button>
+      </div>
+    </div>
+    }
+
+    <!-- FIN BUSCADOR MOBILE -->
 
     <!-- Overlay -->
     <div
