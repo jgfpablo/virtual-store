@@ -1,3 +1,4 @@
+@if(product){
 <!-- VISTA DESKTOP -->
 <div class="md:flex hidden px-4">
   <div class="flex-1"></div>
@@ -8,18 +9,26 @@
     <!-- Galería de imágenes -->
     <div class="flex flex-col flex-4 p-4">
       <div class="bg-yellow-50 rounded-xl p-4">
+        @if (product.images && product.images.length > 0) {
         <img
           class="w-full rounded-xl object-contain"
-          src="{{ product.images[imgActive] }}"
+          [src]="product.images[imgActive]"
           alt="product image"
         />
+        } @else {
+        <img
+          class="w-full rounded-xl object-contain opacity-50"
+          src="img/1.png"
+          alt="imagen no disponible"
+        />
+        }
       </div>
 
       <div class="flex justify-center items-center flex-wrap mt-4 gap-2">
-        @for (item of product.images; track $index) {
+        @for (item of product?.images ?? []; track $index) {
         <img
           class="w-20 h-20 p-1 rounded-xl border border-gray-300 hover:border-yellow-500 cursor-pointer transition"
-          src="{{ item }}"
+          [src]="item"
           alt="product image"
           (click)="imgActive = $index"
         />
@@ -38,11 +47,16 @@
         Colores disponibles: {{ product.colores }}
       </div>
 
-      <button
-        class="mt-6 bg-yellow-500 text-white font-semibold py-2 px-6 rounded-md hover:bg-yellow-600 transition w-fit"
-      >
-        WhatsApp
-      </button>
+      <div class="flex justify-center items-center text-center">
+        <a
+          class="mt-6 min-w-3/5 bg-yellow-500 text-white font-semibold py-2 px-6 rounded-md hover:bg-yellow-600 transition w-fit"
+          target="_blank"
+          [href]="urlWhatsapp"
+          rel="noopener noreferrer"
+        >
+          WhatsApp
+        </a>
+      </div>
     </div>
   </div>
 
@@ -55,18 +69,26 @@
 >
   <div class="flex flex-col space-y-4">
     <div class="bg-yellow-50 rounded-xl p-4">
+      @if (product.images && product.images.length > 0) {
       <img
         class="w-full rounded-xl object-contain"
-        src="{{ product.images[imgActive] }}"
+        [src]="product.images[imgActive]"
         alt="product image"
       />
+      } @else {
+      <img
+        class="w-full rounded-xl object-contain opacity-50"
+        src="img/1.png"
+        alt="imagen no disponible"
+      />
+      }
     </div>
 
     <div class="flex justify-center items-center flex-wrap gap-2">
-      @for (item of product.images; track $index) {
+      @for (item of product?.images ?? []; track $index) {
       <img
         class="w-20 h-20 p-1 rounded-xl border border-gray-300 hover:border-yellow-500 cursor-pointer transition"
-        src="{{ item }}"
+        [src]="item"
         alt="product image"
         (click)="imgActive = $index"
       />
@@ -79,14 +101,14 @@
         $ {{ product.precio }}
       </h3>
       <p class="text-gray-700 leading-relaxed">{{ product.descripcion }}</p>
-      <div class="text-sm text-gray-500">
+      <div class="text-sm text-gray-500 mt-4 mb-8">
         Colores disponibles: {{ product.colores }}
       </div>
 
       <a
-        class="mt-4 bg-yellow-500 text-white font-semibold py-2 px-6 rounded-md hover:bg-yellow-600 transition"
-        [href]="url"
+        class="bg-yellow-500 text-white font-semibold py-2 px-6 rounded-md hover:bg-yellow-600 transition"
         target="_blank"
+        [href]="urlWhatsapp"
         rel="noopener noreferrer"
       >
         WhatsApp
@@ -94,3 +116,7 @@
     </div>
   </div>
 </div>
+
+}@else{
+<app-spinner></app-spinner>
+}
