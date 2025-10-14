@@ -1,18 +1,24 @@
-<div class="md:flex hidden">
-  <div class="flex-1 flex"></div>
+<!-- VISTA DESKTOP -->
+<div class="md:flex hidden px-4">
+  <div class="flex-1"></div>
 
-  <div class="flex-6 flex border-gray-200 border-2 mt-10">
-    <div class="flex flex-col flex-4">
-      <img
-        class="w-full rounded-4xl p-4"
-        src="{{ product.images[imgActive] }}"
-        alt="product image"
-      />
+  <div
+    class="flex-6 flex border border-gray-200 rounded-xl shadow-md mt-10 bg-white"
+  >
+    <!-- Galería de imágenes -->
+    <div class="flex flex-col flex-4 p-4">
+      <div class="bg-yellow-50 rounded-xl p-4">
+        <img
+          class="w-full rounded-xl object-contain"
+          src="{{ product.images[imgActive] }}"
+          alt="product image"
+        />
+      </div>
 
-      <div class="flex justify-center items-center flex-wrap">
+      <div class="flex justify-center items-center flex-wrap mt-4 gap-2">
         @for (item of product.images; track $index) {
         <img
-          class="w-24 h-24 p-2 rounded-4xl"
+          class="w-20 h-20 p-1 rounded-xl border border-gray-300 hover:border-yellow-500 cursor-pointer transition"
           src="{{ item }}"
           alt="product image"
           (click)="imgActive = $index"
@@ -21,57 +27,70 @@
       </div>
     </div>
 
-    <div class="flex-6 justify-center items-center">
-      <h1 class="text-4xl p-4 font-bold">{{ product.nombre }}</h1>
-      <h3 class="text-4xl text-gray-400 pt-2">$ {{ product.precio }}</h3>
-
-      <h3 class="pt-4">
-        {{ product.descripcion }}
+    <!-- Información del producto -->
+    <div class="flex-6 flex flex-col justify-center p-6 space-y-4">
+      <h1 class="text-3xl font-bold text-gray-900">{{ product.nombre }}</h1>
+      <h3 class="text-2xl text-yellow-600 font-semibold">
+        $ {{ product.precio }}
       </h3>
+      <p class="text-gray-700 leading-relaxed">{{ product.descripcion }}</p>
+      <div class="text-sm text-gray-500">
+        Colores disponibles: {{ product.colores }}
+      </div>
 
-      <div class="pt-4">{{ product.colores }}</div>
-
-      <button class="border-2 border-black mt-4 bg-green-400 w-64">
-        WHARAP
+      <button
+        class="mt-6 bg-yellow-500 text-white font-semibold py-2 px-6 rounded-md hover:bg-yellow-600 transition w-fit"
+      >
+        WhatsApp
       </button>
     </div>
   </div>
 
-  <div class="flex-1 flex"></div>
+  <div class="flex-1"></div>
 </div>
 
 <!-- VISTA MOBILE -->
+<div
+  class="md:hidden border border-gray-200 rounded-xl shadow-md bg-white m-2 p-2"
+>
+  <div class="flex flex-col space-y-4">
+    <div class="bg-yellow-50 rounded-xl p-4">
+      <img
+        class="w-full rounded-xl object-contain"
+        src="{{ product.images[imgActive] }}"
+        alt="product image"
+      />
+    </div>
 
-<div class="flex border-gray-200 border-2 md:hidden">
-  <div class="flex flex-col">
-    <img class="w-full rounded-4xl p-4" src="img/10.jpg" alt="product image" />
-    <div class="flex justify-center items-center flex-wrap">
+    <div class="flex justify-center items-center flex-wrap gap-2">
       @for (item of product.images; track $index) {
       <img
-        class="w-24 h-24 p-2 rounded-4xl"
+        class="w-20 h-20 p-1 rounded-xl border border-gray-300 hover:border-yellow-500 cursor-pointer transition"
         src="{{ item }}"
         alt="product image"
+        (click)="imgActive = $index"
       />
       }
     </div>
 
-    <div class="justify-center items-center">
-      <h1 class="text-4xl p-4 font-bold text-center">{{ product.nombre }}</h1>
-      <h3 class="text-4xl text-gray-400 pt-2 text-center">
+    <div class="text-center space-y-2">
+      <h1 class="text-2xl font-bold text-gray-900">{{ product.nombre }}</h1>
+      <h3 class="text-xl text-yellow-600 font-semibold">
         $ {{ product.precio }}
       </h3>
-
-      <h3 class="pt-4 text-center">
-        {{ product.descripcion }}
-      </h3>
-
-      <div class="pt-4 text-center">{{ product.colores }}</div>
-
-      <div class="flex justify-center items-center">
-        <button class="border-2 border-black mt-4 bg-green-400 w-64">
-          WHARAP
-        </button>
+      <p class="text-gray-700 leading-relaxed">{{ product.descripcion }}</p>
+      <div class="text-sm text-gray-500">
+        Colores disponibles: {{ product.colores }}
       </div>
+
+      <a
+        class="mt-4 bg-yellow-500 text-white font-semibold py-2 px-6 rounded-md hover:bg-yellow-600 transition"
+        [href]="url"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        WhatsApp
+      </a>
     </div>
   </div>
 </div>

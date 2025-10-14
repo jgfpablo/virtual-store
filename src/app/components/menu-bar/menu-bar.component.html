@@ -1,84 +1,113 @@
-<nav>
-  <div class="md:flex hidden">
-    <div class="flex-2"></div>
+<nav
+  class="md:bg-white md:shadow-md flex px-6 py-4 justify-between items-center"
+>
+  <!-- Desktop Menu -->
+  <div class="hidden md:flex w-full justify-between items-center">
+    <!-- Logo -->
+    <div class="text-2xl font-bold text-yellow-600">STORE</div>
 
-    <div class="flex flex-row items-center justify-between flex-10">
-      <div class="flex justify-center items-center">
-        <span>STORE</span>
-      </div>
-      <div class="flex justify-between items-center">
-        <ul class="hidden md:flex space-x-4">
-          <li class="px-1"><a [routerLink]="['/']">Inicio</a></li>
+    <!-- Navigation Links -->
+    <ul class="flex space-x-6 text-gray-700 font-medium">
+      <li>
+        <a [routerLink]="['/']" class="hover:text-yellow-600 transition"
+          >Inicio</a
+        >
+      </li>
+      @for (item of categories; track $index) {
+      <li>
+        <a
+          [routerLink]="['products/', item.nombre]"
+          class="hover:text-yellow-600 transition"
+        >
+          {{ item.nombre }}
+        </a>
+      </li>
+      }
+    </ul>
+
+    <!-- Search Bar -->
+    <div class="flex items-center space-x-2">
+      <input
+        type="text"
+        placeholder="Buscar..."
+        [(ngModel)]="buscarInput"
+        class="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+      />
+      <button
+        type="button"
+        (click)="buscar()"
+        class="bg-yellow-500 text-white px-4 py-1 rounded-md hover:bg-yellow-600 transition"
+      >
+        Buscar
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <!-- Botón del menú móvil -->
+    <button
+      id="menu-btn"
+      class="fixed top-4 left-4 z-50 md:hidden bg-white p-2 rounded-md shadow-md"
+    >
+      <svg
+        class="w-6 h-6 text-gray-700"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
+    </button>
+
+    <!-- Overlay -->
+    <div
+      id="overlay"
+      class="fixed inset-0 bg-gray-400 bg-opacity-80 z-40 hidden md:hidden"
+    ></div>
+
+    <!-- Menú móvil -->
+    <div
+      id="menu"
+      class="fixed top-0 left-0 h-full w-64 bg-white shadow-xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden border-r border-gray-200"
+    >
+      <div class="flex flex-col h-full">
+        <!-- Encabezado -->
+        <div
+          class="flex items-center justify-between px-6 py-4 border-b border-gray-200"
+        >
+          <span class="text-xl font-bold text-yellow-600">STORE</span>
+          <button
+            (click)="closeMenu()"
+            class="text-gray-500 hover:text-yellow-600 transition"
+          >
+            ✕
+          </button>
+        </div>
+
+        <!-- Enlaces -->
+        <ul class="flex flex-col px-6 py-4 space-y-3 text-gray-700 font-medium">
+          <li (click)="closeMenu()">
+            <a [routerLink]="['/']" class="hover:text-yellow-600 transition"
+              >Inicio</a
+            >
+          </li>
           @for (item of categories; track $index) {
-          <li class="px-1">
-            <a [routerLink]="['products/', item.nombre]">{{ item.nombre }}</a>
+          <li (click)="closeMenu()">
+            <a
+              [routerLink]="['products/', item.nombre]"
+              class="hover:text-yellow-600 transition"
+            >
+              {{ item.nombre }}
+            </a>
           </li>
           }
         </ul>
       </div>
-      <div class="flex justify-center items-center space-x-2 mr-8">
-        <input
-          type="text"
-          placeholder="Buscar"
-          [(ngModel)]="buscarInput"
-          class="border rounded px-2 py-1"
-        />
-        <button
-          type="button"
-          (click)="buscar()"
-          class="bg-blue-500 text-white px-3 py-1 rounded"
-        >
-          Buscar
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MOBILE MENU  -->
-
-  <!-- OVERLAY -->
-  <div
-    id="overlay"
-    class="fixed inset-0 bg-gray-200 bg-opacity-80 z-40 hidden md:hidden"
-  ></div>
-  <!-- OVERLAY END -->
-
-  <button id="menu-btn" class="p-3 z-60 fixed md:hidden">
-    <svg
-      class="w-6 h-6"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M4 6h16M4 12h16M4 18h16"
-      ></path>
-    </svg>
-  </button>
-
-  <div
-    id="menu"
-    class="md:hidden z-50 hs-overlay duration-300 ease-in border-gray-200 -translate-x-full fixed top-0 left-0 h-full w-64 bg-white shadow-lg"
-  >
-    <div class="relative flex flex-col h-full">
-      <div class="pl-4 flex justify-between items-center">
-        <span class="font-semibold text-xl ml-8 pt-2 text-black">logo</span>
-      </div>
-      <ul class="space-y-1 p-4">
-        <li (click)="closeMenu()" class="py-2">
-          <a [routerLink]="['/']">Inicio</a>
-        </li>
-
-        @for (item of categories; track $index) {
-        <li class="py-2" (click)="closeMenu()">
-          <a [routerLink]="['products/', item.nombre]">{{ item.nombre }}</a>
-        </li>
-        }
-      </ul>
     </div>
   </div>
 </nav>
