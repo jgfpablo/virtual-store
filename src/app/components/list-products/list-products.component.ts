@@ -19,6 +19,9 @@ export class ListProductsComponent {
   loading = true;
 
   searchTerm: string | null = null;
+  noResults = false;
+
+  private mode: 'all' | 'category' | 'search' = 'all'; // 🔹 control central
 
   constructor(
     private service: ProductsService,
@@ -27,80 +30,95 @@ export class ListProductsComponent {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.searchTerm = params['search'] || null;
-      this.page = 1;
+      const rawSearch = params['search'];
+      const trimmed = rawSearch?.trim() || '';
 
-      if (!this.searchTerm) {
-        this.loadProducts(); // solo carga todos si NO hay búsqueda
-      } else {
-        this.service.getBySearch(this.searchTerm, this.page, 6).subscribe({
-          next: (res: any) => {
-            this.products = res.products;
-            this.totalPages = res.totalPages;
-            this.loading = false;
-          },
-          error: (err) => {
-            console.error(err);
-            this.loading = false;
-          },
-        });
+      const newSearch = trimmed.length > 0 ? trimmed : null;
+
+      if (newSearch !== this.searchTerm) {
+        this.searchTerm = newSearch;
+        this.page = 1;
+        this.noResults = false;
+
+        if (this.searchTerm) {
+          this.mode = 'search';
+          this.loadSearchResults();
+        } else if (this.category) {
+          this.mode = 'category';
+          this.loadCategoryOrAll();
+        } else {
+          this.mode = 'all';
+          this.loadCategoryOrAll();
+        }
+      }
+    });
+
+    // 🟢 Detectar si estamos en "/"
+    this.route.url.subscribe((segments) => {
+      const currentPath = segments.map((s) => s.path).join('/');
+      if (!currentPath && !this.searchTerm) {
+        // Estamos en inicio y no hay búsqueda activa
+        this.category = '';
+        this.mode = 'all';
+        this.loadCategoryOrAll();
       }
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['category'] && !this.searchTerm) {
+    // ⚠️ Evitar recarga si estamos en modo búsqueda
+    if (this.mode === 'search') return;
+
+    if (changes['category'] && this.category) {
       this.page = 1;
-      this.loadProducts();
+      this.noResults = false;
+      this.mode = 'category';
+      this.loadCategoryOrAll();
     }
   }
 
-  loadProducts() {
+  private loadSearchResults(): void {
     this.loading = true;
     this.products = [];
+    this.noResults = false;
 
-    // Si hay búsqueda activa
-    if (this.searchTerm) {
-      this.service.getBySearch(this.searchTerm, this.page, 6).subscribe({
-        next: (res: any) => {
-          this.products = res.products;
-          this.totalPages = res.totalPages;
-          this.loading = false;
-        },
-        error: (err: any) => {
-          console.error(err);
-          this.loading = false;
-        },
-      });
-      return;
-    }
-
-    // Si hay categoría seleccionada
-    if (this.category) {
-      this.service.getByCategory(this.category, this.page, 6).subscribe({
-        next: (res: any) => {
-          this.products = res.products;
-          this.totalPages = res.totalPages;
-          this.loading = false;
-        },
-        error: (err: any) => {
-          console.error(err);
-          this.loading = false;
-        },
-      });
-      return;
-    }
-
-    // Si no hay búsqueda ni categoría
-    this.service.getAll(this.page, 6).subscribe({
+    this.service.getBySearch(this.searchTerm!, this.page, 6).subscribe({
       next: (res: any) => {
+        this.loading = false;
         this.products = res.products;
         this.totalPages = res.totalPages;
-        this.loading = false;
+        this.noResults = res.products.length === 0;
+
+        // 🔹 si no hay resultados, permanecemos en modo "search"
+        if (this.noResults) this.mode = 'search';
       },
-      error: (err: any) => {
-        console.error(err);
+      error: () => {
         this.loading = false;
+        this.noResults = true;
+        this.mode = 'search';
+      },
+    });
+  }
+
+  private loadCategoryOrAll(): void {
+    this.loading = true;
+    this.products = [];
+    this.noResults = false;
+
+    const obs = this.category
+      ? this.service.getByCategory(this.category, this.page, 6)
+      : this.service.getAll(this.page, 6);
+
+    obs.subscribe({
+      next: (res: any) => {
+        this.loading = false;
+        this.products = res.products;
+        this.totalPages = res.totalPages;
+        this.noResults = res.products.length === 0;
+      },
+      error: () => {
+        this.loading = false;
+        this.noResults = true;
       },
     });
   }
@@ -108,21 +126,24 @@ export class ListProductsComponent {
   goToPage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.page = page;
-      this.loadProducts();
+      if (this.mode === 'search') this.loadSearchResults();
+      else this.loadCategoryOrAll();
     }
   }
 
   nextPage() {
     if (this.page < this.totalPages) {
       this.page++;
-      this.loadProducts();
+      if (this.mode === 'search') this.loadSearchResults();
+      else this.loadCategoryOrAll();
     }
   }
 
   prevPage() {
     if (this.page > 1) {
       this.page--;
-      this.loadProducts();
+      if (this.mode === 'search') this.loadSearchResults();
+      else this.loadCategoryOrAll();
     }
   }
 
@@ -132,9 +153,7 @@ export class ListProductsComponent {
     let start = Math.max(this.page - half, 1);
     let end = Math.min(start + this.visiblePages - 1, this.totalPages);
     start = Math.max(end - this.visiblePages + 1, 1);
-
     for (let i = start; i <= end; i++) pages.push(i);
-
     return pages;
   }
 }

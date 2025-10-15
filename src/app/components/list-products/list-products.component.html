@@ -13,7 +13,10 @@
 <app-spinner *ngIf="loading"></app-spinner>
 
 <!-- Paginación -->
-<div class="flex justify-center items-center mt-6 mb-8 space-x-2">
+<div
+  *ngIf="products.length > 0"
+  class="flex justify-center items-center mt-6 mb-8 space-x-2"
+>
   <!-- Flecha atrás -->
   <button
     (click)="prevPage()"
@@ -42,4 +45,15 @@
   >
     &raquo;
   </button>
+</div>
+
+<div
+  *ngIf="!loading && noResults"
+  class="flex flex-col items-center justify-center py-10"
+>
+  <img
+    src="img/sinProductos.png"
+    alt="Sin resultados"
+    class="md:w-1/2 h-auto mb-4 w-4/5"
+  />
 </div>

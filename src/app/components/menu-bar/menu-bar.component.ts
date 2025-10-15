@@ -45,7 +45,6 @@ export class MenuBarComponent {
       next: (res: any) => {
         // 👇 asegúrate de acceder al array correcto
         this.categories = res.categorias || [];
-        console.log(this.categories);
       },
       error: (err) => console.error('Error al obtener categorías:', err),
     });
@@ -57,6 +56,8 @@ export class MenuBarComponent {
 
     // Redirige a /product con queryParams
     this.router.navigate(['/product'], { queryParams: { search: term } });
+
+    this.buscarInput = '';
   }
 
   closeMenu() {
