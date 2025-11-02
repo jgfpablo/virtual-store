@@ -7,4 +7,8 @@ export interface Product {
   tamano: string[];
   images: string[];
   colores: string[];
+  alto: string;
+  ancho: string;
+  grosor: string;
+  material: string;
 }

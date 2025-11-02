@@ -1,6 +1,6 @@
 @if(product){
 <!-- VISTA DESKTOP -->
-<div class="md:flex hidden px-4">
+<div class="md:flex hidden px-4 mb-4">
   <div class="flex-1"></div>
 
   <div
@@ -37,21 +37,51 @@
     </div>
 
     <!-- Información del producto -->
-    <div class="flex-6 flex flex-col justify-center p-6 space-y-4">
-      <h1 class="text-3xl font-bold text-gray-900">{{ product.nombre }}</h1>
-      <h3 class="text-2xl text-yellow-600 font-semibold">
+    <div
+      class="flex-6 flex flex-col justify-center p-3 space-y-4 bg-gray-50 m-3 rounded-md text-sm text-gray-800"
+    >
+      <h1 class="text-3xl text-center font-bold text-gray-900">
+        {{ product.nombre }}
+      </h1>
+      <h3 class="text-3xl font-bold text-orange-600 text-center">
         $ {{ product.precio }}
       </h3>
+
       <p class="text-gray-700 leading-relaxed">{{ product.descripcion }}</p>
-      <div class="text-sm text-gray-500">
-        Colores disponibles: {{ product.colores }}
+      <div class="">
+        <div class="bg-white p-4 rounded-md border border-gray-200">
+          <p><strong>📏 Alto:</strong> {{ product.alto }}</p>
+          <p><strong>📐 Ancho:</strong> {{ product.ancho }}</p>
+          <p><strong>🧱 Grosor:</strong> {{ product.grosor }}</p>
+          <p><strong>🧵 Material:</strong> {{ product.material }}</p>
+        </div>
       </div>
 
+      @if (product.colores && product.colores[0] != "") {
+      <div class="text-sm text-gray-700 mt-2">
+        🎨 <strong>Colores disponibles:</strong> {{ product.colores }}
+      </div>
+      }
+
       <div class="flex justify-center flex-col items-center mb-8">
-        <h1 class="text-xl font-bold text-gray-900">
-          Todos los productos se realizan a pedido con una seña del 50% del
-          valor del producto,Ubicación de retiro
-        </h1>
+        <!-- <div
+          class="mt-4 p-4 bg-yellow-100 rounded-lg text-sm text-gray-800 mb-4"
+        >
+          <p class="font-semibold mb-2">
+            🛒 Todos los productos se realizan a pedido con una seña del
+            <span class="text-red-600 font-bold">50%</span> del valor.
+          </p>
+        </div> -->
+        <div
+          class="mt-4 p-4 bg-yellow-100 rounded-lg text-sm text-gray-800 mb-4 border border-yellow-300 shadow-sm"
+        >
+          <p class="font-semibold mb-2">
+            🛒 <strong>Todos los productos se realizan a pedido</strong><br />
+            Seña del <span class="text-red-600 font-bold">50%</span> para
+            confirmar.
+          </p>
+        </div>
+
         <iframe
           width="600"
           height="200"
@@ -64,12 +94,12 @@
 
       <div class="flex justify-center items-center text-center">
         <a
-          class="mt-6 min-w-3/5 bg-yellow-500 text-white font-semibold py-2 px-6 rounded-md hover:bg-yellow-600 transition w-fit"
+          class="mt-6 bg-green-500 text-white font-bold py-2 px-6 rounded-full hover:bg-green-600 transition shadow-md"
           target="_blank"
           [href]="urlWhatsapp"
           rel="noopener noreferrer"
         >
-          WhatsApp
+          Contactar por WhatsApp
         </a>
       </div>
     </div>
@@ -112,14 +142,33 @@
 
     <div class="text-center mb-6">
       <h1 class="text-2xl font-bold text-gray-900">{{ product.nombre }}</h1>
-      <h3 class="text-xl text-yellow-600 font-semibold">
+      <h3 class="text-3xl font-bold text-orange-600 text-center">
         $ {{ product.precio }}
       </h3>
       <p class="text-gray-700 leading-relaxed">{{ product.descripcion }}</p>
-      <div class="text-sm text-gray-500 mt-4 mb-8">
-        Colores disponibles: {{ product.colores }}
+      @if (product.colores && product.colores[0] != "") {
+      <div class="text-sm text-gray-700 mt-2">
+        🎨 <strong>Colores disponibles:</strong> {{ product.colores }}
       </div>
+      }
 
+      <div class="mt-2">
+        <div class="bg-white p-4 rounded-md border border-gray-200">
+          <p><strong>📏 Alto:</strong> {{ product.alto }}</p>
+          <p><strong>📐 Ancho:</strong> {{ product.ancho }}</p>
+          <p><strong>🧱 Grosor:</strong> {{ product.grosor }}</p>
+          <p><strong>🧵 Material:</strong> {{ product.material }}</p>
+        </div>
+      </div>
+      <div
+        class="mt-4 p-4 bg-yellow-100 rounded-lg text-sm text-gray-800 mb-4 border border-yellow-300 shadow-sm"
+      >
+        <p class="font-semibold mb-2">
+          🛒 <strong>Todos los productos se realizan a pedido</strong><br />
+          Seña del <span class="text-red-600 font-bold">50%</span> para
+          confirmar.
+        </p>
+      </div>
       <div class="flex justify-center flex-col items-center mb-8">
         <h1 class="text-xl font-bold text-gray-900">Ubicación de retiro</h1>
         <iframe
@@ -132,12 +181,12 @@
         ></iframe>
       </div>
       <a
-        class="bg-yellow-500 text-white font-semibold py-2 px-6 rounded-md hover:bg-yellow-600 transition"
+        class="mt-6 bg-green-500 text-white font-bold py-2 px-6 rounded-full hover:bg-green-600 transition shadow-md"
         target="_blank"
         [href]="urlWhatsapp"
         rel="noopener noreferrer"
       >
-        WhatsApp
+        Contactar por WhatsApp
       </a>
     </div>
   </div>

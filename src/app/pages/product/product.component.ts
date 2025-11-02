@@ -23,6 +23,7 @@ export class ProductComponent {
       this.id = params.get('product') || '';
       this.productService.getById(this.id).subscribe((product) => {
         this.product = product;
+        console.log(product);
         this.urlWhatsapp = `https://wa.me/5493764172282?text=${encodeURIComponent(
           'Hola, quiero más info sobre el producto ' + this.product.nombre
         )}`;
