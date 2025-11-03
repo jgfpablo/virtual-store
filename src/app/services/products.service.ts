@@ -6,9 +6,10 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
+
+// 'https://virtual-store-api-production.up.railway.app/api/products';
 export class ProductsService {
-  private apiUrl =
-    'https://virtual-store-api-production.up.railway.app/api/products'; // tu endpoint
+  private apiUrl = 'https://virtual-store-api-06j4.onrender.com'; // tu endpoint
 
   constructor(private http: HttpClient) {}
 
