@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CategoriesService {
-  private apiUrl =
-    'https://virtual-store-api-production.up.railway.app/api/categorias';
+  // https://virtual-store-api-production.up.railway.app/api/categorias
+  private apiUrl = 'https://virtual-store-api-06j4.onrender.com/api/categorias';
 
   constructor(private http: HttpClient) {}
 
